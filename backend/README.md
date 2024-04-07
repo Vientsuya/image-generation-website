@@ -9,6 +9,9 @@
 
 ### How to run migrations
 ``goose postgres <db_connection_link> up``
+``goose postgres <db_connection_link> down``
 
-**After changing a schema remember to update queries and then generate new golang code**
+**To regenerate the most recent migration just use the down command and then up.
+
+**After changing a schema or creating a new query remember to update queries and then generate new golang code**
 ``sqlc generate``
