@@ -11,7 +11,7 @@
 ``goose postgres <db_connection_link> up``
 ``goose postgres <db_connection_link> down``
 
-**To regenerate the most recent migration just use the down command and then up.
+**To regenerate the most recent migration just use the down command and then up.**
 
 **After changing a schema or creating a new query remember to update queries and then generate new golang code**
 ``sqlc generate``
