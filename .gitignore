@@ -1,3 +1,5 @@
 image-generation-website
 .env
 .idea
+node_modules
+.next
