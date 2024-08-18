@@ -1,5 +1,6 @@
 import logo from '../../assets/logo.png';
 import { useState } from 'react';
+import WalletBalance from './walletBalance';
 
 export default function Nav() {
 
@@ -13,7 +14,7 @@ export default function Nav() {
                 </a>
                 
                 <div className="flex items-center md:mr-10">
-                    <h3 className="mr-2">0,00$</h3>
+                    <WalletBalance />
                     <div className="">
                         <div className="flex items-center justify-center h-full">
                             <div className="relative inline-block text-left">
