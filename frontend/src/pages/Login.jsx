@@ -8,10 +8,12 @@ export default function Login() {
             <section className="min-h-screen flex-1 flex flex-col justify-between p-10 text-white bg-cover bg-center ">
                 <div className="flex-grow flex flex-col justify-center text-center md:text-left">
                     <h2 className="text-4xl md:text-6xl font-bold leading-tight mb-20 md:w-9/12">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Praca dyplomowa
                     </h2>
                     <p className="text-xl md:text-2xl">
-                        LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT.
+                        Serwis ten stanowi integralną część pracy licencjackiej (kierunek: elektroniczne 
+                        przetwarzanie informacji), przygotowanej pod kierunkiem dr Krzysztofa Pomorskiego na Wydziale Zarządzania i Komunikacji Społecznej 
+                        Uniwersytetu Jagiellońskiego
                     </p>
                 </div>
                 <div className="flex justify-center md:justify-start">
@@ -21,9 +23,7 @@ export default function Login() {
                         </button>
                     </Link>
                 </div>
-                <p className="text-sm text-center mt-8">
-                    APLIKACJA STWORZONA PRZEZ KACPRA BRYŁA I MARCINA DZIERWA JAKO PRACA LICENCJACKA
-                </p>
+                
             </section>
 
             {/* Right Section - Hidden on Mobile */}
