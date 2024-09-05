@@ -8,12 +8,11 @@ export default function ImgSection() {
     useEffect(() => {
         const fetchImages = async () => {
             try {
-                // Wezwanie API do pobrania obrazów
-                // const response = await axios.get('/api/images');
-                // setImages(response.data);
-
-                // Ne mam narazie API więc zwracam puste obiekty
-                setImages([]);
+                const response = await axios.get('http://localhost:5000/get_all_images');
+                setImages(response.data);
+                
+                
+                setImages(response.data.images);
             } catch (error) {
                 console.error('Error fetching images:', error);
                 setImages([]); // Ustawiam puste obiekty w przypadku błędu
@@ -42,8 +41,8 @@ export default function ImgSection() {
             {images.map((image, index) => (
                 <div key={index} className="w-full h-56 rounded-md overflow-hidden">
                     <img
-                        src={image.url} // image.url to ścieżka do obrazu
-                        alt={image.alt || `Image ${index + 1}`}
+                        src={image.image_url}
+                        alt='Wygenerowane zdjęcie'
                         className="object-cover w-full h-full"
                     />
                 </div>

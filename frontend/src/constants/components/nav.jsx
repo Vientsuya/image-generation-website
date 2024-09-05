@@ -5,7 +5,11 @@ import WalletBalance from './walletBalance';
 export default function Nav() {
 
     const [isOpen, setIsOpen] = useState(false);
-
+    const handleLogout = () => {
+        localStorage.clear();  // This clears all localStorage data
+        // Or clear a specific item: localStorage.removeItem('username');
+        console.log(localStorage);
+    };
     return (
         <nav className="bg-white border-gray-200 dark:bg-gray-900">
             <div className="flex flex-wrap justify-between items-center p-2 md:ml-8">
@@ -42,7 +46,8 @@ export default function Nav() {
                                         <a href="#" className="py-1 block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                                             Konto
                                         </a>
-                                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                        <a href="/login" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
+                                        onClick={handleLogout}>
                                             Wyloguj
                                         </a>
                                     </div>
