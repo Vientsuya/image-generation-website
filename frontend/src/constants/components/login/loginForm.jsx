@@ -17,10 +17,16 @@ export default function LoginForm() {
             const response = await axios.post('http://localhost:5000/verify_credentials', {
                 username,
                 password,
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json', // Ensure JSON content type
+                }
             });
 
-            if (response.data.success) {
+            if (response.status === 200) {
                 console.log('Login successful:', response.data);
+                localStorage.setItem('username', username);
                 navigate('/');
             } else {
                 // error

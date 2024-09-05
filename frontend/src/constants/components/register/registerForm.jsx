@@ -21,7 +21,7 @@ export default function RegisterForm() {
     
         try {
             const response = await axios.post(
-                'http://localhost:5000/create_user', 
+                'http://localhost:5000//create_user', 
                 {
                     username,
                     password,
