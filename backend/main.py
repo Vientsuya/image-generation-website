@@ -183,7 +183,7 @@ def get_user_images():
     if not user:
         return jsonify({"error": "User not found"}), 404
     
-    images = [{"id": img.id, "filename": img.filename, "created_at": img.created_at.isoformat()} 
+    images = [{"id": img.id, "prompt": img.prompt, "image_url": img.url ,"created_at": img.created_at.isoformat()} 
               for img in user.images]
     
     return jsonify({
