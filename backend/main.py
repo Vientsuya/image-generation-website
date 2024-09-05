@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
+from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.exc import IntegrityError
+from openai import OpenAI
 from decimal import Decimal, InvalidOperation
 
 app = Flask(__name__)
@@ -12,12 +14,27 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+# User-Image association table
+user_images = db.Table('user_images',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('image_id', db.Integer, db.ForeignKey('generated_image.id'), primary_key=True)
+)
+
 # User model
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
     wallet = db.Column(db.Numeric(10, 2), nullable=False, default=10.00)
+    images = db.relationship('GeneratedImage', secondary=user_images, back_populates='owners')
+
+# GeneratedImage model
+class GeneratedImage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    prompt = db.Column(db.String(512), nullable=False)
+    image_url = db.Column(db.String(768), nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    owners = db.relationship('User', secondary=user_images, back_populates='images')
 
 @app.route('/create_user', methods=['POST'])
 def create_user():
@@ -108,6 +125,94 @@ def update_balance():
         "message": "Balance updated successfully",
         "new_balance": float(user.wallet)
     }), 200
+
+@app.route('/generate_image', methods=['POST'])
+def generate_image():
+    data = request.json
+    username = data.get('username')
+    prompt = data.get('prompt')
+    
+    if not username or not prompt:
+        return jsonify({"error": "Username and prompt are required"}), 400
+    
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+    
+    new_image = GeneratedImage(prompt=prompt)
+
+    client = OpenAI()
+
+    response = client.images.generate(
+    model="dall-e-2",
+    prompt=prompt,
+    size="1024x1024",
+    quality="standard",
+    n=1,
+    )
+
+    image_url = response.data[0].url
+
+    new_image.image_url = image_url
+    new_image.prompt = prompt
+    
+    new_image.owners.append(user)
+    
+    db.session.add(new_image)
+    db.session.commit()
+    
+    return jsonify({
+        "message": "Image generated and associated with user",
+        "image_id": new_image.id,
+        "url": image_url
+    }), 201
+
+@app.route('/get_user_images', methods=['GET'])
+def get_user_images():
+    username = request.args.get('username')
+    
+    if not username:
+        return jsonify({"error": "Username is required"}), 400
+    
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+    
+    images = [{"id": img.id, "filename": img.filename, "created_at": img.created_at.isoformat()} 
+              for img in user.images]
+    
+    return jsonify({
+        "username": user.username,
+        "images": images
+    }), 200
+
+@app.route('/get_all_images', methods=['GET'])
+def get_all_images():
+    # Optional pagination parameters
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+    
+    # Query all images with pagination
+    pagination = GeneratedImage.query.order_by(GeneratedImage.created_at.desc()).paginate(
+        page=page, per_page=per_page, error_out=False)
+    
+    images = []
+    for img in pagination.items:
+        images.append({
+            "id": img.id,
+            "image_url": img.image_url,
+            "prompt": img.prompt,
+            "created_at": img.created_at.isoformat(),
+            "owners": [owner.username for owner in img.owners]
+        })
+    
+    return jsonify({
+        "images": images,
+        "total_images": pagination.total,
+        "pages": pagination.pages,
+        "current_page": page
+    }), 200
+
 
 if __name__ == '__main__':
     with app.app_context():
