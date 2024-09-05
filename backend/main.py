@@ -89,9 +89,10 @@ def verify_credentials():
     else:
         return jsonify({"error": "Invalid credentials"}), 401
 
-@app.route('/get_balance', methods=['GET'])
+@app.route('/get_balance', methods=['POST'])
 def get_balance():
-    username = request.args.get('username')
+    data = request.json
+    username = data.get('username')
     
     if not username:
         return jsonify({"error": "Username is required"}), 400
