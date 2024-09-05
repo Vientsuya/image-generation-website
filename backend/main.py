@@ -83,6 +83,7 @@ def verify_credentials():
     if check_password_hash(user.password, password):
         return jsonify({
             "message": "Credentials verified successfully",
+            "username": user.username,
             "wallet_balance": float(user.wallet)
         }), 200
     else:
