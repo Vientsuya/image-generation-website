@@ -4,11 +4,10 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.exc import IntegrityError
 from openai import OpenAI
-from flask_cors import CORS
 from decimal import Decimal, InvalidOperation
+from flask_cors import CORS
 
 app = Flask(__name__)
-
 CORS(app)
 
 # Database configuration

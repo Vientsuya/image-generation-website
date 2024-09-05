@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
 
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -13,22 +13,13 @@ export default function LoginForm() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Sprawdzenie formu bez backendu xp
-        if (email === 'test@exm.pl' && password === 'password') {
-            console.log('Login successful with hardcoded credentials');
-            navigate('/');
-            return;
-        }
-
         try {
-            // Post do serwera
-            const response = await axios.post('', {
-                email,
+            const response = await axios.post('http://localhost:5000/verify_credentials', {
+                username,
                 password,
             });
 
             if (response.data.success) {
-                // sukceesik
                 console.log('Login successful:', response.data);
                 navigate('/');
             } else {
@@ -49,13 +40,13 @@ export default function LoginForm() {
             </p>
             <form onSubmit={handleSubmit} className="space-y-6 w-full max-w-sm">
                 <Input
-                    id="email-address"
-                    name="email"
-                    type="email"
-                    placeholder="E-mail"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    autoComplete="email"
+                    id="username"
+                    name="username"
+                    type="username"
+                    placeholder="Nazwa użytkownika"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    autoComplete="username"
                     required
                 />
                 <Input
