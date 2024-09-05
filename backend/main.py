@@ -9,7 +9,7 @@ from decimal import Decimal, InvalidOperation
 app = Flask(__name__)
 
 # Database configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/image_generation'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost:3390/image_generation'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
