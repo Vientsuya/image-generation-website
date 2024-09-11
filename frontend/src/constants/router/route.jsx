@@ -7,9 +7,9 @@ import AuthRoute from './authRoute';
 import NotFound from '../../pages/NotFound';
 
 const isAuthenticated = () => {
-    //logika
-    //return localStorage.getItem('token') !== null;
-    return true
+    const savedUsername = localStorage.getItem('username');
+    return savedUsername !== null;
+    
 };
 
 export const ROUTES = [
