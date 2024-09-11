@@ -43,9 +43,6 @@ export default function Nav() {
                                 aria-orientation="vertical" 
                                 aria-labelledby="options-menu">
                                     <div role="none">
-                                        <a href="#" className="py-1 block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
-                                            Konto
-                                        </a>
                                         <a href="/login" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
                                         onClick={handleLogout}>
                                             Wyloguj

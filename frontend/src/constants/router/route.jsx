@@ -9,13 +9,13 @@ import NotFound from '../../pages/NotFound';
 const isAuthenticated = () => {
     const savedUsername = localStorage.getItem('username');
     return savedUsername !== null;
-    
+ 
 };
 
 export const ROUTES = [
     {
         path: '/',
-        element: <AuthRoute isAuthenticated={isAuthenticated()}><Home /></AuthRoute>,
+        element: <AuthRoute isAuthenticated={isAuthenticated}><Home /></AuthRoute>,
     },
 
     {

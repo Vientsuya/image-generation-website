@@ -166,7 +166,7 @@ def generate_image():
     db.session.commit()
     
     return jsonify({
-        "message": "Image generated and associated with user",
+        "message": "Wygenerowano obraz",
         "image_id": new_image.id,
         "url": image_url
     }), 201

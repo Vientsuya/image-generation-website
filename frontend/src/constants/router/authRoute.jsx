@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 
 const AuthRoute = ({ children, isAuthenticated }) => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated()) {
         return <Navigate to="/login" />;
     }
 
