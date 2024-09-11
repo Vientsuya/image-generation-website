@@ -47,7 +47,7 @@ export default function RegisterForm() {
                 id="username"
                 name="username"
                 type="text"
-                placeholder="Username"
+                placeholder="Nazwa"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 autoComplete="username"
@@ -57,7 +57,7 @@ export default function RegisterForm() {
                 id="password"
                 name="password"
                 type="password"
-                placeholder="Password"
+                placeholder="Hasło"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="new-password"
@@ -67,7 +67,7 @@ export default function RegisterForm() {
                 id="confirm-password"
                 name="confirmPassword"
                 type="password"
-                placeholder="Confirm password"
+                placeholder="Potwierdź hasło"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 autoComplete="new-password"

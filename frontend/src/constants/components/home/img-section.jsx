@@ -9,10 +9,15 @@ export default function ImgSection() {
         const fetchImages = async () => {
             try {
                 const response = await axios.get('http://localhost:5000/get_all_images');
-                setImages(response.data);
-                
-                
-                setImages(response.data.images);
+                console.log('Images:', response.data.images);
+                const currentTime = new Date();
+                const filteredImages = response.data.images.filter(image => {
+                    const createdAt = new Date(image.created_at);
+                    const timeDifference = currentTime - createdAt;
+                    const hoursDifference = timeDifference / (1000 * 60 * 60);
+                    return hoursDifference <= 3.0166667; // 2 hours and 1 minute in hours
+                });
+                setImages(filteredImages);
             } catch (error) {
                 console.error('Error fetching images:', error);
                 setImages([]); // Ustawiam puste obiekty w przypadku błędu

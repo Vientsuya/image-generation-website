@@ -28,6 +28,7 @@ export default function LoginForm() {
                 console.log('Login successful:', response.data);
                 localStorage.setItem('username', username);
                 navigate('/');
+                
             } else {
                 // error
                 setError(response.data.message || 'Login failed');
