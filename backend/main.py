@@ -10,9 +10,15 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+# Load environment variables
+db_uri = os.getenv('DB_HOST')
+env_port = os.getenv('PORT')
+
 # Database configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost:3390/image_generation'
+app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+
 
 db = SQLAlchemy(app)
 
@@ -221,4 +227,4 @@ def get_all_images():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()  # Create tables
-    app.run(debug=True)
+    app.run(debug=True, port=env_port)
