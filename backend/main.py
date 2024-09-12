@@ -5,6 +5,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.exc import IntegrityError
 from openai import OpenAI
 from decimal import Decimal, InvalidOperation
+import os
+from dotenv import load_dotenv
 from flask_cors import CORS
 
 app = Flask(__name__)
