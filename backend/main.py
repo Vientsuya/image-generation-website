@@ -12,12 +12,16 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-# Load environment variables
-db_uri = os.getenv('DB_HOST')
+# Load environment variables from .env
+load_dotenv()
+
+# Set environment variables
+db_uri = os.getenv('DB_URI')
 env_port = os.getenv('PORT')
 
 # Database configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+print(db_uri)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
