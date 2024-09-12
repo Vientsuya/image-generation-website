@@ -21,7 +21,6 @@ env_port = os.getenv('PORT')
 
 # Database configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
-print(db_uri)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
